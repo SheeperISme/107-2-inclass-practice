@@ -1,0 +1,206 @@
+---
+title: '2019-03-20'
+author: ""
+date: "3/20/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+dialogue <- c('小明說："明天不用上課。"',
+               '小花說："真的嗎？"')
+
+cat(dialogue, sep="\n")
+```
+
+```{r}
+dialogue <- c("小明說：'明天不用上課。'",
+               "小花說：'真的嗎？'")
+
+cat(dialogue, sep="\n")
+```
+
+```{r}
+aLogical <- c(T,F,T,T,F)
+class(aLogical)
+sum(aLogical)
+```
+
+```{r}
+aLogical <- c(T,TRUE,F,FALSE,FALSE)
+class(aLogical)
+```
+
+```{r}
+studentMajor <- factor(c('經濟系','經濟系','法律系'))
+```
+```{r}
+studentMajor0 <- (c('經濟系','經濟系','法律系'))
+```
+
+```{r}
+studentMajors <- factor(c("經濟系", "經濟系", "法律系"))
+```
+
+```{r}
+class(studentMajor)
+typeof(studentMajor)
+```
+```{r}
+as.integer(studentMajor)
+```
+
+```{r}
+birth_place <- factor(c('台北市','桃園市','屏東市','台北市'))
+typeof(birth_place)
+as.integer(birth_place)
+```
+
+```{r}
+birth_place2 <- (c('台北市','桃園市','屏東市'))
+typeof(birth_place2)
+```
+
+```{r}
+birth_place2 <- (c('台北市','桃園市','屏東市'))
+
+typeof(birth_place2)
+as.integer(birth_place2)
+```
+
+```{r}
+birth_place2 <- c('台北市','桃園市','屏東市')
+birth_place2 <- as.integer(birth_place2)
+typeof(birth_place2)
+as.integer(birth_place2)
+```
+```{r}
+library(lubridate)
+```
+
+```{r}
+dtObject<-ymd_hms("1970-01-01 00:02:53") 
+```
+```{r}
+dtObjectVector<-ymd_hms(
+  c("1970-01-01 00:02:53",
+    "1980-02-11 11:25:22"))
+```
+
+```{r}
+class(dtObject)
+```
+
+```{r}
+dtObject
+```
+```{r}
+typeof(dtObject)
+```
+```{r}
+Sys.timezone()
+```
+```{r}
+twDateTime <- ymd_hms("2019-03-18 14:04:00", tz="Asia/Taipei")
+twDateTime
+```
+
+```{r}
+LisbonDateTime <- with_tz(twDateTime,tzone="Europe/Lisbon")
+LisbonDateTime
+```
+
+```{r}
+typeof(twDateTime)
+as.double(twDateTime)
+```
+```{r}
+twDateTime <- mdy_hms("3/14/2019 8:18:47", tz="Asia/Taipei")
+twDateTime
+```
+```{r}
+twDateTime2 <- mdy("March, 1, 2019")
+twDateTime2
+```
+```{r}
+LisbonDateTime <- ymd("2018-09-11")
+```
+
+```{r}
+a <- c(1, 5, -3)
+b <- c(0.5, 12, 2)
+aL <- c(1L, 5L, -3L)
+bL <- c(-2L, -4L, 8L)
+
+a+bL
+aL+bL
+aL*b
+a+4
+```
+```{r}
+a+b
+a/b
+a%%b
+```
+```{r}
+startingDate <- ymd("2000-02-17")
+startingDate2 <- ymd("2001-05-20")
+startingDate + years(1)
+startingDate + dyears(1)
+```
+```{r}
+startingDate - startingDate2
+```
+```{r}
+x <- 5
+y <- 7
+
+x2 <- c(1,5,10)
+y2 <- c(-1,5,20)
+
+x==y
+x>y
+x<y
+
+x2==y2
+x2>y2
+x2<y2
+```
+```{r}
+x3 <- c("小明","小花")
+y3 <- c("小明","小華")
+
+x3!=y3
+```
+```{r}
+x5 <- c("台北市","新北市","高雄市")
+y5 <- c("台北市","新北市")
+
+x5 %in% y5
+```
+```{r}
+x2 <- c(1,NA,10)
+y2 <- c(-1,NA,20)
+
+x3 <- c(NA,"小花")
+y3 <- c(NA,"小華")
+
+x2==y2
+```
+```{r}
+x2
+is.na(x2)
+sum(x2)
+sum(x2,na.rm = F)
+sum(x2,na.rm = T)
+ #設定為Ｔ以忽略ＮＡ
+```
+```{r}
+0/0
+0%%0
+0**0
+```
+
