@@ -203,4 +203,79 @@ sum(x2,na.rm = T)
 0%%0
 0**0
 ```
+```{r}
+library(readr)
+exData2 <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/exData2.csv")
+currency <- exData2$幣別
+```
+```{r}
+head(currency)
+```
+```{r}
+class(currency)#非類別資料factor
+```
+
+
+```{r}
+levels(currency)
+```
+```{r}
+currency <- as.factor(currency)
+class(currency)
+levels(currency)
+```
+```{r}
+length(levels(currency))#屬向量內元素的個數
+```
+```{r}
+step1_extratLevelsVector <- levels(currency)
+step1_extratLevelsVector
+```
+```{r}
+step2_countVectorLength <- length(step1_extratLevelsVector)
+step2_countVectorLength
+```
+```{r}
+currency2 <- c("日圓", "美元","日元")
+currency2
+```
+```{r}
+sum(currency2 == "日元")
+```
+```{r}
+head(currency)
+sum(currency == "日圓JPY/USD")
+```
+```{r}
+x5 <- c("台北市","新北市","高雄市")
+greatTaipei <- c("台北市","新北市")
+
+x5 %in% greatTaipei
+!(x5 %in% greatTaipei)
+```
+```{r}
+!(x5 %in% greatTaipei)
+```
+```{r}
+y5 <- c("女","男","女")
+
+y5
+y5=="女"
+!(y5=="女")
+```
+```{r}
+x5 %in% greatTaipei
+y5 == "女"
+(x5 %in% greatTaipei) & (y5 == "女")
+```
+```{r}
+which((x5 %in% greatTaipei)&(y5=="女"))
+```
+```{r}
+x5
+y5
+(x5 %in% greatTaipei)
+(y5 == "女")
+(x5 %in% greatTaipei) | (y5 == "女")
+```
 
