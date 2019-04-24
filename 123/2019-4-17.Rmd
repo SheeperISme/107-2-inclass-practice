@@ -320,3 +320,7 @@ classSurvey <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data
 classSurvey[,c(4,5)]
 ```
 
+```{r}
+classSurvey[,c(4)=='女']
+```
+
