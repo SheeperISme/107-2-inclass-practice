@@ -222,6 +222,8 @@ sampledTranscriptData裡每個元素底下的值都是一位同學在一門課�
 取出科目名稱為「科目204」的學期成績，計算該科的當人比例（子樣本中成績不及格的比例）將此值存在答案物件failRate裡（為numeric/double class）。
 ```{r ans71}
 # failRate
+failRate <- sum(sampledTranscriptData$科目名稱=='科目204'& sampledTranscriptData$學期成績<60)/sum(sampledTranscriptData$科目名稱=='科目204')
+failRate
 ```
 
 
@@ -232,6 +234,12 @@ sampledTranscriptData裡每個元素底下的值都是一位同學在一門課�
 「學屆」元素值代表的是每一位同學的入學學年，可由學號的第2到4位字元產生，「系碼」即學號的第5到6位字元；如410073298即為100學年入學，系碼73。另本題的答案物件為sampledTranscriptData。（使用`sampledTranscriptData$學屆 <- `及`sampledTranscriptData$系碼 <-`，將個別由學號取出之值放在`<-`右側即可在sampleTranscriptData新增這兩個元素。）
 ```{r ans72}
 # sampledTranscriptData
+sampledTranscriptData$學屆 <- 
+  str_sub(sampledTranscriptData$學號,2,4)
+sampledTranscriptData$系碼 <- 
+  str_sub(sampledTranscriptData$學號,5,6)
+
+sampledTranscriptData
 ```
 
 ### 7.3 產生學系 str_replace_all
@@ -239,18 +247,47 @@ sampledTranscriptData裡每個元素底下的值都是一位同學在一門課�
 
 ```{r ans73}
 # sampledTranscriptData$學系 
+sampledTranscriptData$系級<-str_replace_all(sampledTranscriptData$系級,'1|2|3|4','')
+sampledTranscriptData$學系<- sampledTranscriptData$系級
+sampledTranscriptData$學系
 ```
+```{r}
+sampledTranscriptData$學系 <- str_replace(sampledTranscriptData$系級,"[1234]","")
+
+sampledTranscriptData$學系
+
+
+sampledTranscriptData$學系 <- str_replace(sampledTranscriptData$系級,"[:digit:]","")
+
+sampledTranscriptData$學系
+```
+
 
 ### 7.4 轉系生
 學號是一入學就決定，不管後來有沒有轉系。 請找出外系轉入經濟系的學生學號，並存成changeMajorStudent答案物件。(由於資料一筆為一科成績，所以學號會重覆出現，要存入答案物件前請用`unique()`去除重覆學號)
 ```{r ans74}
 # changeMajorStudent
+(sampledTranscriptData$系碼!="73" & 
+   sampledTranscriptData$學系=="經濟學系") -> logiCheck
+sampledTranscriptData$學號[logiCheck]
+
+unique(sampledTranscriptData$學號[logiCheck]) -> changeMajorStudent
+
+changeMajorStudent
 ```
 
 ### 7.5 學期平均成績
 請計算學號"410073409b"在101學年第1學期的平均成績（即該學期每科成績乘每科學分後加總，再除以總學分數），答案存在答案物件studentGPA(為numeric class)。
 ```{r ans75}
 # studentGPA
+(sampledTranscriptData$學號 == "410073409b" &
+  sampledTranscriptData$學年==101 &
+  sampledTranscriptData$學期==1) -> logiSelect
+  
+sum(sampledTranscriptData$學分數[logiSelect]*
+  sampledTranscriptData$學期成績[logiSelect])/sum(sampledTranscriptData$學分數[logiSelect]) -> studentGPA
+
+studentGPA
 ```
 
 > 答完後，請確認每個code chunk的最後一行皆為該題的答案物件（除非題目有另外規定），且frontmatter的studentID及studentName皆有填寫。
