@@ -155,6 +155,20 @@ westYears
 
 ```{r ans53}
 # westDates
+str_split(twDates2,'年') -> DataSplitList
+DataSplitList #是個list
+
+map(DataSplitList,~.[[2]]) -> monthList #取出每個元素的第二個值
+monthList
+
+unlist(monthList) -> monthVector #解開list
+monthVector
+
+str_c(as.character(westYears),monthVector,'01',sep = '-') -> westDates
+westDates #全部黏起來
+
+ymd(westDates) -> westDates
+westDates #轉成時間
 ```
 
 
@@ -171,6 +185,8 @@ names(invoiceList) <-
 請將元素名稱「訂單時間(以訂單時區顯示)」改成「訂單時區之下單時間」。答案最後一行請寫invoiceList答案物件。
 ```{r ans61}
 # invoiceList
+names(invoiceList)[[2]] <- "訂單時區之下單時間"
+invoiceList
 ```
 
 ### 6.2 轉UTC
@@ -178,6 +194,17 @@ names(invoiceList) <-
 
 ```{r ans62}
 # invoiceList 
+(invoiceList$訂單時區=="America/New_York") -> nyLogical
+(invoiceList$訂單時區=="Asia/Taipei") -> tpLogical
+
+invoiceList$UTC時間[nyLogical] <-
+  with_tz(ymd_hms(invoiceList$`訂單時區之下單時間`[nyLogical],
+          tz="America/New_York"),tzone="UTC")
+invoiceList$UTC時間[tpLogical] <-
+  with_tz(ymd_hms(invoiceList$`訂單時區之下單時間`[tpLogical],
+          tz="Asia/Taipei"),tzone="UTC")
+
+invoiceList 
 ```
 
 
