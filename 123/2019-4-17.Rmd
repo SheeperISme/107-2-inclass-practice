@@ -422,4 +422,21 @@ gpa_fun("9efW9aea5")
 gpa_fun(studentID) # 使用global environmen裡物件studentID的值當輸入值
 gpa_fun("92aS67fee")
 ```
+```{r}
+plus<- function(x,alpha){
+  plusValue <- x + alpha # 程序產生output值
+  return(plusValue) # 傳回output值
+}
+```
+```{r}
+plus(50,8828)
+```
+```{r}
+supply_fun<- function(a,b,P){
+  Qs <- a+b*P # 程序產生output值
+  return(Qs) # 傳回output值
+}
+supply_fun(1,222,exp(5))
+```
+
 
