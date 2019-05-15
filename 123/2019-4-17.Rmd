@@ -374,6 +374,52 @@ exData3 <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/mas
                       期間 = col_character()))
 ```
 ```{r}
+library(lubridate)
+exData3$期間 <- ymd(exData3$期間)
 
+isAsiaCrisis <- (exData3$期間 >= ymd(1997-06-01) & 
+  exData3$期間 <= ymd(1998-12-01))
+```
+```{r}
+a <-as.double(ymd("1997-06-01"))
+b <-as.double(ymd("1998-12-01"))
+dou <- as.double(exData3$期間) 
+isAsiaCrisis <- (dou-a) >=0 & (b-dou)<=0
+isAsiaCrisis
+```
+```{r}
+
+```
+```{r}
+library(readr)
+transcriptDataFinal <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/transcriptDataFinal.csv")
+```
+```{r}
+studentID <-"92aS67fee" 
+transcriptDataFinal$學號==studentID -> logiChosenStudent
+sum(transcriptDataFinal$學期成績[logiChosenStudent]*
+  transcriptDataFinal$學分數[logiChosenStudent])/
+  sum(transcriptDataFinal$學分數[logiChosenStudent]) -> GPA
+```
+
+```{r}
+gpa_fun <- function(studentID){
+  transcriptDataFinal$學號==studentID -> logiChosenStudent
+  sum(transcriptDataFinal$學期成績[logiChosenStudent]*
+    transcriptDataFinal$學分數[logiChosenStudent])/
+    sum(transcriptDataFinal$學分數[logiChosenStudent]) -> GPA
+  return(GPA)
+}
+```
+```{r}
+gpa_fun("479W9ee8e")
+gpa_fun("9efW9aea5")
+```
+```{r}
+studentID <-"92aS67fee" 
+gpa_fun("479W9ee8e")
+gpa_fun("9efW9aea5")
+gpa_fun(studentID) # 使用global environmen裡物件studentID的值當輸入值
+gpa_fun("92aS67fee")
 ```
 
