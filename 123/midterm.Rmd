@@ -63,6 +63,11 @@ logicBig
 建立一個答案物件compoundObject, 其中`compoundObject[[1]]`會得到數字1 (numeric class), `compoundObject[[2]]`會得到字串"hello"(character class),`compoundObject[[3]]`會得到邏輯TRUE (logical class)。 
 ```{r ans2}
 # compoundObject
+compoundObject <- list(
+  1,"hello",TRUE
+)
+
+compoundObject
 ```
 
 
@@ -74,6 +79,10 @@ load("submitTime.Rda")
 請將它改成以America/New_York時區顯示的「character class」文字字串，並存在答案物件nyTime。答案物件請寫在最後一行。（注意答案物件class必修為character）
 ```{r ans3}
 # nyTime
+mdy_hms(submitTime)-> submitTime1
+with_tz(submitTime1,tzone = "America/New_York") -> nyTime
+as.character(nyTime) -> nyTime
+nyTime
 ```
 
 ## 4 map
@@ -142,6 +151,8 @@ as.integer(yy)+1911 -> westYears
 
 westYears
 ```
+
+
 ```{r}
 twDates2
 str_sub(twDates2,1,3) -> yearCharacter
@@ -170,6 +181,33 @@ westDates #全部黏起來
 ymd(westDates) -> westDates
 westDates #轉成時間
 ```
+```{r}
+map(dateList,~.[[2]]) -> mm
+str_c(westYears,mm,"1",sep="-") -> ymdString
+ymd(ymdString) -> westDates
+
+westDates
+```
+```{r}
+date_convert_twYM <- function(twDates,dd="01"){
+  yyyy<-as.integer(str_extract(twDates,"(?<=(民國))[:digit:]+"))+1911
+  mm<-str_extract(twDates,"[:digit:]+(?=月)")
+  yyyymmdd <- ymd(str_c(yyyy,mm,dd,sep="-"))
+  yyyymmdd
+}
+```
+
+```{r}
+date_convert_twYM <- function(twDates){
+  #twDates
+  yyyy<-as.integer(str_extract(twDates,"(?<=(民國))[:digit:]+"))+1911
+  mm<-str_extract(twDates,"[:digit:]+(?=月)")
+  yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
+  return(yyyymmdd)
+}
+```
+
+
 
 
 ## 6 differen time zone
@@ -206,6 +244,27 @@ invoiceList$UTC時間[tpLogical] <-
 
 invoiceList 
 ```
+```{r}
+(invoiceList$訂單時區 == "America/New_York") -> nyLogical
+(invoiceList$訂單時區 == "Asia/Taipei") -> tpLogical
+
+invoiceList$nyLogical <- nyLogical
+invoiceList$tpLogical <- tpLogical
+
+library(lubridate)
+ymd_hms(invoiceList$訂單時區之下單時間[nyLogical],
+        tz="America/New_York") -> nyDateTime
+
+invoiceList$UTC時間[nyLogical] <- with_tz(nyDateTime,tz="UTC")
+
+ymd_hms(invoiceList$訂單時區之下單時間[tpLogical],
+        tz="Asia/Taipei") -> tpDateTime
+
+invoiceList$UTC時間[tpLogical] <- with_tz(tpDateTime,tz="UTC")
+
+invoiceList
+```
+
 
 
 ## 7 成績單 sampledTranscriptData
